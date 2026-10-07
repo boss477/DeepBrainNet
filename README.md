@@ -51,3 +51,21 @@ Predicted ages from `pred.csv` can be compared against these values to confirm t
 The repository ships `Models/DBN_model.h5` as the default model used by the example script. Additional model files are available through the Box link above.
 
 For reproducibility, start with the bundled `Models/DBN_model.h5` and the sample data. If an external `.h5` model from Box does not load, first re-download it and verify that the download completed successfully. Keras/TensorFlow `.h5` files can also be sensitive to library versions, so using a legacy Keras/TensorFlow environment similar to the one referenced by `Script/test.sh` may be necessary for older model files.
+
+### Where can I download the full training dataset?
+
+This repository includes four example T1 scans in `Data/` and their ages in `Sample_Data.csv`. It does not include the full training dataset. The paper describes a large multi-study training cohort, but users should not expect the complete training data to be downloadable from this repository.
+
+### Which Python, Keras, and TensorFlow versions should I try?
+
+`Script/test.sh` was written for a legacy environment and loads `python/anaconda/3.5.6+tensorflow-gpu+pillow` before running `Model_Test.py`. If a modern TensorFlow/Keras environment cannot load an `.h5` model, retry with a legacy stack compatible with Keras 2.x / TensorFlow 1.x, or use a maintained container/pipeline that pins those dependencies.
+
+If you download a model from Box and see `OSError: Unable to open file (file signature not found)`, the downloaded file is often not the real HDF5 payload. Re-download the model from the Box page and verify the file size before loading it.
+
+### Does this repository provide data augmentation code?
+
+No. The prediction path slices each preprocessed NIfTI image into 80 JPG files and runs inference with the selected `.h5` model. There is no training or data-augmentation pipeline in this repository.
+
+### Where is the paper?
+
+The open-access paper is available here: https://academic.oup.com/brain/article/143/7/2312/5863667
